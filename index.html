@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>З 21-річчям, Брате!</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: #0f172a; /* Темний елегантний фон */
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            padding: 40px;
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        h1 {
+            font-size: 4rem;
+            margin: 0;
+            background: linear-gradient(45deg, #3b82f6, #8b5cf6, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 900;
+        }
+
+        .age {
+            font-size: 8rem;
+            line-height: 1;
+            margin: 20px 0;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+        }
+
+        p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: #cbd5e1;
+        }
+
+        .btn {
+            margin-top: 30px;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.6);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .decoration {
+            position: absolute;
+            z-index: -1;
+            filter: blur(80px);
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="decoration" style="background: #3b82f6; width: 300px; height: 300px; top: -50px; left: -50px;"></div>
+    <div class="decoration" style="background: #ec4899; width: 300px; height: 300px; bottom: -50px; right: -50px;"></div>
+
+    <div class="card">
+        <h1>БРАТЕ, ВІТАЮ!</h1>
+        <div class="age">21</div>
+        <p>Сьогодні особливий день. 21 рік — це час великих можливостей, крутих поворотів і справжньої свободи.</p>
+        <p>Бажаю тобі бути першим у всьому, за що берешся. Нехай енергія б'є через край, а мрії здійснюються швидше, ніж ти встигаєш їх загадувати!</p>
+        
+        <button class="btn" onclick="celebrate()">ТИЦЬ СЮДИ!</button>
+    </div>
+
+    <script>
+        function celebrate() {
+            // Запуск конфеті
+            var duration = 3 * 1000;
+            var end = Date.now() + duration;
+
+            (function frame() {
+                confetti({
+                    particleCount: 7,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 },
+                    colors: ['#3b82f6', '#8b5cf6']
+                });
+                confetti({
+                    particleCount: 7,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 },
+                    colors: ['#ec4899', '#8b5cf6']
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
+        }
+
+        // Автоматичне конфеті при завантаженні
+        window.onload = () => {
+            setTimeout(celebrate, 500);
+        };
+    </script>
+</body>
+</html>

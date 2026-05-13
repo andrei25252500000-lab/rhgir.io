@@ -3,137 +3,420 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>З 21-річчям, Брате!</title>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <title>З Днем Народження, Мамо!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Pacifico&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap');
+        /* CSS ЗМІННІ */
+        :root {
+            --primary-pink: #ff85a2;
+            --dark-pink: #f06292;
+            --soft-gold: #ffd700;
+            --white: #ffffff;
+            --text-color: #4a4a4a;
+            --transition: all 0.4s ease;
+        }
 
-        body {
+        /* ГЛОБАЛЬНІ СТИЛІ */
+        * {
             margin: 0;
             padding: 0;
-            background: #0f172a; /* Темний елегантний фон */
-            color: white;
+            box-sizing: border-box;
+        }
+
+        body {
             font-family: 'Montserrat', sans-serif;
+            background-color: #fff5f7;
+            color: var(--text-color);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        h1, h2 {
+            font-family: 'Pacifico', cursive;
+        }
+
+        /* АНІМАЦІЯ ПАДАННЯ ПЕЛЮСТОК (CANVAS) */
+        #petals-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        /* ХЕДЕР / ГЕРОЙ-СЕКЦІЯ */
+        .hero {
+            height: 100vh;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        .card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 30px;
-            padding: 40px;
             text-align: center;
-            max-width: 600px;
-            width: 90%;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            animation: fadeIn 1.5s ease-out;
+            background: linear-gradient(rgba(255, 133, 162, 0.3), rgba(255, 255, 255, 0.7)),
+                        url('https://images.unsplash.com/photo-1490750967868-88aa4486c946?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            padding: 20px;
         }
 
-        h1 {
+        .hero h1 {
             font-size: 4rem;
-            margin: 0;
-            background: linear-gradient(45deg, #3b82f6, #8b5cf6, #ec4899);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 900;
+            color: var(--dark-pink);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1.5s forwards;
         }
 
-        .age {
-            font-size: 8rem;
-            line-height: 1;
-            margin: 20px 0;
-            color: #fff;
-            text-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
-        }
-
-        p {
-            font-size: 1.2rem;
+        .hero p {
+            font-size: 1.5rem;
+            max-width: 600px;
             line-height: 1.6;
-            color: #cbd5e1;
+            opacity: 0;
+            animation: fadeInUp 1.5s 0.5s forwards;
         }
 
-        .btn {
-            margin-top: 30px;
-            padding: 15px 30px;
+        /* ГОЛОВНИЙ ЛИСТ */
+        .letter-section {
+            padding: 80px 20px;
+            background: var(--white);
+            display: flex;
+            justify-content: center;
+        }
+
+        .letter-card {
+            max-width: 800px;
+            background: #fff;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            position: relative;
+            border: 2px solid #ffeef2;
+        }
+
+        .letter-card h2 {
+            font-size: 2.5rem;
+            color: var(--dark-pink);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .letter-card p {
             font-size: 1.1rem;
-            font-weight: bold;
+            line-height: 2;
+            margin-bottom: 20px;
+            text-indent: 20px;
+        }
+
+        /* ГАЛЕРЕЯ (АДАПТИВНА СІТКА) */
+        .gallery {
+            padding: 80px 20px;
+            background: #fff5f7;
+        }
+
+        .gallery h2 {
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 2.5rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .grid-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            height: 350px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: var(--transition);
+        }
+
+        .grid-item:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 25px rgba(240, 98, 146, 0.3);
+        }
+
+        .grid-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
             color: white;
-            background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .grid-item:hover .overlay {
+            opacity: 1;
+        }
+
+        /* ІНТЕРАКТИВНА КНОПКА СЮРПРИЗУ */
+        .surprise-section {
+            padding: 100px 20px;
+            text-align: center;
+            background: linear-gradient(45deg, #ff85a2, #ffb1c1);
+            color: white;
+        }
+
+        #surprise-btn {
+            padding: 20px 40px;
+            font-size: 1.5rem;
+            background: var(--white);
+            color: var(--dark-pink);
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
+            font-weight: bold;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
 
-        .btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.6);
+        #surprise-btn:hover {
+            transform: scale(1.1);
+            background: var(--soft-gold);
+            color: #444;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .hidden-message {
+            display: none;
+            margin-top: 40px;
+            font-size: 2rem;
+            font-family: 'Pacifico', cursive;
+            animation: bounce 1s infinite alternate;
         }
 
-        .decoration {
-            position: absolute;
-            z-index: -1;
-            filter: blur(80px);
+        /* ФУТЕР */
+        footer {
+            padding: 40px;
+            text-align: center;
+            background: #4a4a4a;
+            color: #ddd;
+        }
+
+        /* АНІМАЦІЇ */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-15px); }
+        }
+
+        /* АДАПТИВНІСТЬ ДЛЯ МОБІЛЬНИХ */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .hero p { font-size: 1.1rem; }
+            .letter-card { padding: 25px; }
+            .letter-card h2 { font-size: 1.8rem; }
+            .letter-card p { font-size: 1rem; line-height: 1.6; }
+            .grid { grid-template-columns: 1fr; }
+            .grid-item { height: 300px; }
+        }
+
+        /* КНОПКА МУЗИКИ */
+        .music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            background: var(--dark-pink);
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: white;
+            font-size: 20px;
         }
     </style>
 </head>
 <body>
 
-    <div class="decoration" style="background: #3b82f6; width: 300px; height: 300px; top: -50px; left: -50px;"></div>
-    <div class="decoration" style="background: #ec4899; width: 300px; height: 300px; bottom: -50px; right: -50px;"></div>
+    <!-- Канвас для падаючих квітів -->
+    <canvas id="petals-canvas"></canvas>
 
-    <div class="card">
-        <h1>БРАТЕ, ВІТАЮ!</h1>
-        <div class="age">21</div>
-        <p>Сьогодні особливий день. 21 рік — це час великих можливостей, крутих поворотів і справжньої свободи.</p>
-        <p>Бажаю тобі бути першим у всьому, за що берешся. Нехай енергія б'є через край, а мрії здійснюються швидше, ніж ти встигаєш їх загадувати!</p>
-        
-        <button class="btn" onclick="celebrate()">ТИЦЬ СЮДИ!</button>
-    </div>
+    <!-- Секція 1: Привітання -->
+    <section class="hero">
+        <h1>З Днем Народження, Мамо!</h1>
+        <p>Сьогодні особливий день, коли весь світ посміхається тобі. Ти — наше сонце, наше натхнення і наша любов.</p>
+    </section>
+
+    <!-- Секція 2: Лист -->
+    <section class="letter-section">
+        <div class="letter-card">
+            <h2>Для найдорожчої...</h2>
+            <p>Люба матусю! Сьогодні я хочу подякувати тобі за кожен день, за кожну безсонну ніч і за ту безмежну підтримку, яку ти даруєш мені все життя.</p>
+            <p>Твої руки — найтепліші, твоє серце — найдобріше, а твоя посмішка здатна розігнати будь-які хмари. Нехай кожен твій день буде сповнений радості, а здоров'я ніколи не підводить.</p>
+            <p>Ти вчила мене бути сильною людиною, вірити в мрії та ніколи не здаватися. І сьогодні я хочу, щоб ти знала: ти — мій справжній герой.</p>
+            <p style="text-align: right; font-weight: bold;">З любов'ю, твоя дитина ❤️</p>
+        </div>
+    </section>
+
+    <!-- Секція 3: Фото-галерея (можна замінити картинки на свої) -->
+    <section class="gallery">
+        <h2>Наші яскраві моменти</h2>
+        <div class="grid">
+            <div class="grid-item">
+                <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&w=500&q=60" alt="Квіти 1">
+                <div class="overlay">Твоя ніжність як ці квіти</div>
+            </div>
+            <div class="grid-item">
+                <img src="https://images.unsplash.com/photo-1518133910546-b6c2fb7d79e3?auto=format&fit=crop&w=500&q=60" alt="Квіти 2">
+                <div class="overlay">Найкраща у світі мама</div>
+            </div>
+            <div class="grid-item">
+                <img src="https://images.unsplash.com/photo-1496661415325-ef852f9e8e7c?auto=format&fit=crop&w=500&q=60" alt="Квіти 3">
+                <div class="overlay">Миру та затишку в домі</div>
+            </div>
+            <div class="grid-item">
+                <img src="https://images.unsplash.com/photo-1455504490126-80ed4d83b3b9?auto=format&fit=crop&w=500&q=60" alt="Квіти 4">
+                <div class="overlay">Сяй завжди від щастя</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Секція 4: Сюрприз -->
+    <section class="surprise-section">
+        <h2>Натисни тут для сюрпризу</h2>
+        <br>
+        <button id="surprise-btn">ВІДКРИТИ ПОДАРУНОК 🎁</button>
+        <div class="hidden-message" id="message">Я ТЕБЕ ЛЮБЛЮ! ТИ НАЙКРАЩА! ✨</div>
+    </section>
+
+    <!-- Музичний контроль (для ілюстрації) -->
+    <div class="music-control" id="musicBtn">🎵</div>
+
+    <!-- Футер -->
+    <footer>
+        <p>&copy; 2026. Створено з любов'ю для Мами.</p>
+    </footer>
 
     <script>
-        function celebrate() {
-            // Запуск конфеті
-            var duration = 3 * 1000;
-            var end = Date.now() + duration;
+        // 1. ПАДАЮЧІ ПЕЛЮСТКИ (JavaScript анімація на Canvas)
+        const canvas = document.getElementById('petals-canvas');
+        const ctx = canvas.getContext('2d');
 
-            (function frame() {
-                confetti({
-                    particleCount: 7,
-                    angle: 60,
-                    spread: 55,
-                    origin: { x: 0 },
-                    colors: ['#3b82f6', '#8b5cf6']
-                });
-                confetti({
-                    particleCount: 7,
-                    angle: 120,
-                    spread: 55,
-                    origin: { x: 1 },
-                    colors: ['#ec4899', '#8b5cf6']
-                });
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
-                if (Date.now() < end) {
-                    requestAnimationFrame(frame);
+        const petalsArray = [];
+
+        class Petal {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height - canvas.height;
+                this.size = Math.random() * 10 + 5;
+                this.speed = Math.random() * 2 + 1;
+                this.angle = Math.random() * 360;
+                this.spin = Math.random() * 2 - 1;
+            }
+            update() {
+                this.y += this.speed;
+                this.angle += this.spin;
+                if (this.y > canvas.height) {
+                    this.y = -20;
+                    this.x = Math.random() * canvas.width;
                 }
-            }());
+            }
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.angle * Math.PI / 180);
+                ctx.fillStyle = "#ffb1c1";
+                ctx.beginPath();
+                ctx.ellipse(0, 0, this.size, this.size / 2, 0, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
         }
 
-        // Автоматичне конфеті при завантаженні
-        window.onload = () => {
-            setTimeout(celebrate, 500);
+        function init() {
+            for (let i = 0; i < 50; i++) {
+                petalsArray.push(new Petal());
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            petalsArray.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+
+        init();
+        animate();
+
+        // Адаптація розміру канвасу при зміні вікна
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // 2. ІНТЕРАКТИВ КНОПКИ
+        const btn = document.getElementById('surprise-btn');
+        const msg = document.getElementById('message');
+
+        btn.addEventListener('click', () => {
+            msg.style.display = 'block';
+            btn.innerHTML = 'ТИ — МОЄ СОНЕЧКО! ☀️';
+            
+            // Додаємо ефект конфетті (простий спалах кольору)
+            document.body.style.backgroundColor = '#fff0f3';
+            setTimeout(() => {
+                document.body.style.backgroundColor = '#fff5f7';
+            }, 500);
+        });
+
+        // 3. ПАРАЛАКС ТА ПОЯВА ПРИ СКРОЛІ
+        const observerOptions = {
+            threshold: 0.2
         };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.grid-item, .letter-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(50px)';
+            el.style.transition = 'all 0.8s ease-out';
+            observer.observe(el);
+        });
+
+        // Контроль музики (просто алерт, бо аудіофайлу немає в коді)
+        document.getElementById('musicBtn').addEventListener('click', () => {
+            alert("Тут могла б грати твоя улюблена пісня! ❤️");
+        });
     </script>
 </body>
 </html>
